@@ -58,7 +58,7 @@ public class RestReportController {
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(new InputStreamResource(stream));
     }
-
+    
     // xuat bao cao ve so luong bang theo loai bang ra file excel
     @GetMapping("/certificates-by-type/excel")
     public ResponseEntity<Resource> exportCertificatesByTypeToExcel() throws IOException {
