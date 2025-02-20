@@ -12,7 +12,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
     // Thống kê tổng số văn bằng theo trường
     @Query("SELECT new org.example.globits.dto.UniversityCertificateReportDto(c.university.id, c.university.name, COUNT(c.id)) " +
-            "FROM Certificate c GROUP BY c.university.id, c.university.name")
+            "FROM Certificate c GROUP BY c.university.id, c.university.name " +
+            "ORDER BY COUNT(c.id) DESC")
     Page<UniversityCertificateReportDto> countCertificatesByUniversity(Pageable pageable);
 
     // Thống kê loại văn bằng được phát ra
@@ -22,6 +23,6 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
 
     // Thống kê số lượng sinh viên được phát bằng theo từng trường
     @Query("SELECT new org.example.globits.dto.UniversityStudentReportDto(c.university.id, c.university.name, COUNT(DISTINCT c.student.id)) " +
-            "FROM Certificate c GROUP BY c.university.id, c.university.name")
+            "FROM Certificate c GROUP BY c.university.id, c.university.name" + " ORDER BY COUNT(DISTINCT c.student.id) DESC")
     Page<UniversityStudentReportDto> countStudentsByUniversity(Pageable pageable);
 }
